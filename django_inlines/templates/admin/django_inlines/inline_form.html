@@ -1,25 +1,25 @@
 <p class="value">
   <label for"id_{{ target }}_value" class="required">Value:</label>
   <input id="id_{{ target }}_value" type='text' class="value">
-  {% if inline.get_app_label %}
-  <a href="../../../{{ inline.get_app_label }}/?t=id" class="related-lookup" id="lookup_id_{{ target }}_value" onclick="return showRelatedObjectLookupPopup(this);"> <img src="{{ ADMIN_MEDIA_PREFIX }}img/admin/selector-search.gif" width="16" height="16" alt="Lookup" /></a>
+  {% if app_label %}
+  <a href="../../../{{ app_label }}/?t=id" class="related-lookup" id="lookup_id_{{ target }}_value" onclick="return showRelatedObjectLookupPopup(this);"> <img src="{{ ADMIN_MEDIA_PREFIX }}img/admin/selector-search.gif" width="16" height="16" alt="Lookup" /></a>
   {% endif %}
-  {% if inline.help_text %}<span class="help_text">{{ inline.help_text }}</span>{% endif %}
+  {% if help_text %}<span class="help_text">{{ help_text }}</span>{% endif %}
 </p>
 
-{% if inline.variants %}
+{% if variants %}
 <p class="variants">
   <label for="{{ target }}_variant">Variant:</label>
   <select id="{{ target }}_variant">
     <option value="">----</option>
-    {% for variant in inline.variants %}
+    {% for variant in variants %}
     <option value="{{ variant }}">{{ variant }}</option>
     {% endfor %}
   </select>
 </p>
 {% endif %}
 
-{% for arg in inline.inline_args %}
+{% for arg in inline_args %}
   <p class="arg"><label for="{{ target }}_{{ arg.name }}">{{ arg.name|capfirst }}:</label>
     {% if arg.options %}
     <select class="value" rel="{{ arg.name }}" id="{{ target }}_{{ arg.name }}">

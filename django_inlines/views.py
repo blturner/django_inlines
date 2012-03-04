@@ -31,5 +31,12 @@ def get_inline_form(request):
     inline_cls = inlines.registry._registry.get(inline, None)
     if not inline_cls:
         raise Http404('Requested inline does not exist')
-    admin_media_prefix = settings.ADMIN_MEDIA_PREFIX
-    return render_to_response('admin/django_inlines/inline_form.html', { 'inline': inline_cls, 'target':target, 'ADMIN_MEDIA_PREFIX': admin_media_prefix })
+    context_dict = {
+        'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
+        'app_label': inline_cls.get_app_label(),
+        'help_text': getattr(inline_cls, 'help_text', ''),
+        'inline_args': getattr(inline_cls, 'inline_args', []),
+        'target': target,
+        'variants': getattr(inline_cls, 'variants', [])
+    }
+    return render_to_response('admin/django_inlines/inline_form.html', context_dict)
