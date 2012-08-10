@@ -26,7 +26,7 @@ class InlineWidget(AdminTextareaWidget):
         super(InlineWidget, self).__init__(attrs=final_attrs)
 
     class Media:
-        css = { 'all': [ 'django_inlines/inlines.css' ] }
+        css = {'all': ['django_inlines/inlines.css']}
 
         js = [
                 'admin/jquery.js',
