@@ -31,7 +31,6 @@ class InlineWidget(AdminTextareaWidget):
         js = [
                 'admin/jquery.js',
                 DelayedUrlReverse('js_inline_config'),
-                'js/admin/RelatedObjectLookups.js',
                 'django_inlines/jquery-fieldselection.js',
                 'django_inlines/inlines.js'
             ]

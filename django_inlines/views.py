@@ -32,7 +32,7 @@ def get_inline_form(request):
     if not inline_cls:
         raise Http404('Requested inline does not exist')
     context_dict = {
-        'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
+        'ADMIN_MEDIA_PREFIX': settings.STATIC_URL,
         'app_label': inline_cls.get_app_label(),
         'help_text': getattr(inline_cls, 'help_text', ''),
         'inline_args': getattr(inline_cls, 'inline_args', []),
