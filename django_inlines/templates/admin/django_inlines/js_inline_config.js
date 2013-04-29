@@ -3,7 +3,7 @@ var DjangoInlines = DjangoInlines || {}
 DjangoInlines.inlines = [];
 {% for inline in inlines %}DjangoInlines.inlines.push('{{ inline.name }}');
 {% endfor %}
-DjangoInlines.get_inline_form_url = "{% url get_inline_form %}";
+DjangoInlines.get_inline_form_url = "{% url 'get_inline_form' %}";
 
 {% comment %}
 {% for inline in inlines %}
