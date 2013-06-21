@@ -21,7 +21,7 @@ setup(
         'django_inlines',
         'django_inlines.templatetags',
     ],
-    package_data={'django_inlines': ['templates/inlines/*.html', 'templates/admin/django_inlines/*.html', 'templates/admin/django_inlines/*.js', 'media/django_inlines/*.css', 'media/django_inlines/*.js']},
+    package_data={'django_inlines': ['templates/inlines/*.html', 'templates/admin/django_inlines/*.html', 'templates/admin/django_inlines/*.js', 'static/django_inlines/*.css', 'static/django_inlines/*.js']},
     classifiers = [
         'Development Status :: 4 - Beta',
         'Framework :: Django',

@@ -4,5 +4,5 @@ include CHANGES.rst
 include LICENSE
 recursive-include django_inlines/templates *.html
 recursive-include django_inlines/templates *.js
-recursive-include django_inlines/media *.js
-recursive-include django_inlines/media *.css
+recursive-include django_inlines/static *.js
+recursive-include django_inlines/static *.css
