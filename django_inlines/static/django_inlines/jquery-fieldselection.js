@@ -3,7 +3,7 @@
  * (c) 2006 Alex Brem <alex@0xab.cd> - http://blog.0xab.cd
  */
 
-(function() {
+(function(jQuery) {
 
 	var fieldSelection = {
 
@@ -80,4 +80,4 @@
 
 	jQuery.each(fieldSelection, function(i) { jQuery.fn[i] = this; });
 
-})();
+}(django.jQuery));
