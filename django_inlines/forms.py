@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.admin.widgets import AdminTextareaWidget
 
 
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules([], ['^django_inlines\.forms\.InlineField'])
+except ImportError:
+    pass
+
+
 class DelayedUrlReverse(object):
     def __init__(self, reverse_arg):
         self.reverse_arg = reverse_arg
