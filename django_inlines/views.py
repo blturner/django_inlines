@@ -32,10 +32,13 @@ def get_inline_form(request):
     if not inline_cls:
         raise Http404('Requested inline does not exist')
     context_dict = {
-        'app_label': inline_cls.get_app_label(),
         'help_text': getattr(inline_cls, 'help_text', ''),
         'inline_args': getattr(inline_cls, 'inline_args', []),
         'target': target,
         'variants': getattr(inline_cls, 'variants', [])
     }
+    try:
+        context_dict['app_label'] = inline_cls.get_app_label()
+    except AttributeError:
+        pass
     return render_to_response('admin/django_inlines/inline_form.html', context_dict)
