@@ -1,3 +1,5 @@
+{% load url from future %}
+
 var DjangoInlines = DjangoInlines || {}
 
 DjangoInlines.inlines = [];
