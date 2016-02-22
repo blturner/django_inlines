@@ -4,7 +4,7 @@
   <label for"id_{{ target }}_value" class="required">Value:</label>
   <input id="id_{{ target }}_value" type='text' class="value">
   {% if app_label %}
-  <a href="../../../{{ app_label }}/?t=id" class="related-lookup" id="lookup_id_{{ target }}_value" onclick="return showRelatedObjectLookupPopup(this);"> <img src="{% static "admin/img/selector-search.gif" %}" width="16" height="16" alt="Lookup" /></a>
+  <a href="{{ changelist_url }}?_to_field=id" class="related-lookup" id="lookup_id_{{ target }}_value" onclick="return showRelatedObjectLookupPopup(this);"></a>
   {% endif %}
   {% if help_text %}<span class="help_text">{{ help_text }}</span>{% endif %}
 </p>

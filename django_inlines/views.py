@@ -1,4 +1,5 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.conf import settings
@@ -18,9 +19,9 @@ def js_inline_config(request):
         args = getattr(inline_cls, 'inline_args', [])
         d['args'] = sorted(args)
         if issubclass(inline_cls, inlines.ModelInline):
-            d['app_path'] = "%s/%s" % (inline_cls.model._meta.app_label, inline_cls.model._meta.module_name)
+            d['app_path'] = "%s/%s" % (inline_cls.model._meta.app_label, inline_cls.model._meta.model_name)
         registered.append(d)
-    return render_to_response('admin/django_inlines/js_inline_config.js', { 'inlines': registered }, mimetype="text/javascript")
+    return render_to_response('admin/django_inlines/js_inline_config.js', { 'inlines': registered }, content_type="text/javascript")
 
 @staff_member_required
 def get_inline_form(request):
@@ -38,7 +39,13 @@ def get_inline_form(request):
         'variants': getattr(inline_cls, 'variants', [])
     }
     try:
-        context_dict['app_label'] = inline_cls.get_app_label()
+        app_label = inline_cls.get_app_label()
     except AttributeError:
         pass
+
+    if app_label:
+        context_dict['app_label'] = app_label
+        context_dict['changelist_url'] = reverse(
+            'admin:{0}_{1}_changelist'.format(inline_cls.model._meta.app_label, inline_cls.model._meta.model_name)
+        )
     return render_to_response('admin/django_inlines/inline_form.html', context_dict)

@@ -22,7 +22,7 @@ django.jQuery(function($) {
   });
 
 
-  $("div.inlineinserter .insert").live("click", function(){
+  $("div.inlineinserter").on("click", ".insert", function(){
     target = $(this).attr('rel');
     parent = $(this).parents('div.inline_control');
     var inline_text = ""
@@ -41,7 +41,7 @@ django.jQuery(function($) {
     $('#'+target).replaceSelection("{{ "+inline_text+" }} ");
   });
 
-  $("div.inlineinserter a.cancel").live("click", function(){
+  $("div.inlineinserter").on("click", "a.cancel", function(){
     $(this).parents('div.inline_control').find('p.insert select').val(['']).change();
     return false;
   });

@@ -160,7 +160,7 @@ class ModelInline(TemplateInline):
 
     @classmethod
     def get_app_label(self):
-        return "%s/%s" % (self.model._meta.app_label, self.model._meta.module_name)
+        return "%s/%s" % (self.model._meta.app_label, self.model._meta.model_name)
 
     def get_context(self):
         model = self.__class__.model
