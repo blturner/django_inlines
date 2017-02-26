@@ -1,10 +1,9 @@
-try:
-    from django.conf.urls.defaults import *
-except:
-    from django.conf.urls import *
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns('django_inlines.views',
-    url(r'^inline_config\.js$', 'js_inline_config', name='js_inline_config'),
-    url(r'^get_inline_form/$', 'get_inline_form', name='get_inline_form'),
-)
+urlpatterns = [
+    url(r'^inline_config\.js$', views.js_inline_config, name='js_inline_config'),
+    url(r'^get_inline_form/$', views.get_inline_form, name='get_inline_form'),
+]
