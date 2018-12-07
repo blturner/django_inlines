@@ -14,7 +14,7 @@ class QuineInline(InlineBase):
             bits.append('')
         if self.value:
             bits.append(self.value)
-        for k, v in self.kwargs.items():
+        for k, v in list(self.kwargs.items()):
             bits.append("%s=%s" % (k,v))
         else:
             return "{{ quine%s }}" % " ".join(bits)
@@ -27,7 +27,7 @@ class DoubleInline(InlineBase):
     def render(self):
         value = self.value
         multiplier = 2
-        if self.kwargs.has_key('multiplier'):
+        if 'multiplier' in self.kwargs:
             try:
                 multiplier = int(self.kwargs['multiplier'])
             except ValueError:

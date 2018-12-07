@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from django_inlines.inlines import Registry, inline_for_model, InlineInputError, registry, ModelInline
-from test_inlines import UserInline
+from .test_inlines import UserInline
 from core.models import User
 
 class ModelInlineTestCase(TestCase):
