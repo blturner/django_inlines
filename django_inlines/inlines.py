@@ -1,6 +1,6 @@
 import re
+
 from django.template.loader import render_to_string
-from django.template import Context, RequestContext
 from django.db.models.base import ModelBase
 from django.conf import settings
 
@@ -137,14 +137,15 @@ class TemplateInline(object):
         return templates
 
     def render(self):
-        if self.context:
-            context = self.context
-        else:
-            context = Context()
+        context = {}
+
         context.update(self.kwargs)
-        context['variant'] = self.variant
-        output = render_to_string(self.get_template_name(), self.get_context(), context)
-        context.pop()
+        context["variant"] = self.variant
+
+        context.update(self.get_context())
+
+        output = render_to_string(self.get_template_name(), context)
+
         return output
 
 
