@@ -77,7 +77,11 @@ def inline_for_model(model, variants=[], inline_args={}):
         d['variants'] = variants
     if inline_args:
         d['args'] = inline_args
-    class_name = "%sInline" % model._meta.module_name.capitalize()
+
+    try:
+        class_name = "%sInline" % model._meta.module_name.capitalize()
+    except AttributeError:
+        class_name = "%sInline" % model._meta.model_name.capitalize()
     return type(class_name, (ModelInline,), d)
 
 
@@ -172,7 +176,7 @@ class ModelInline(TemplateInline):
         except ValueError:
             raise InlineInputError("'%s' could not be converted to an int" % self.value)
         except model.DoesNotExist:
-            raise InlineInputError("'%s' could not be found in %s.%s" % (self.value, model._meta.app_label, model._meta.module_name))
+            raise InlineInputError("'%s' could not be found in %s.%s" % (self.value, model._meta.app_label, model._meta.model_name))
         return { 'object': object }
 
 

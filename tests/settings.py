@@ -9,26 +9,30 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'django_inlines.admin_urls'
+MIDDLEWARE_CLASSES = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+]
+
+ROOT_URLCONF = 'core.urls'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.messages',
     'django.contrib.sessions',
     'core',
     'django_inlines',
 ]
 
-# TEMPLATE_LOADERS = (
-#   'django.template.loaders.filesystem.load_template_source',
-#     'django.template.loaders.app_directories.load_template_source',
-# )
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'),],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'tests/core/templates'),],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -37,10 +41,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'loaders': [
-                ('django.template.loaders.cached.Loader', (
-                    'django.template.loaders.filesystem.Loader',
-                    'django.template.loaders.app_directories.Loader',
-                )),
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
             ],
         },
     },
