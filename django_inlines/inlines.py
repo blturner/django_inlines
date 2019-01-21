@@ -141,14 +141,14 @@ class TemplateInline(object):
         return templates
 
     def render(self):
-        if self.context:
-            context = self.context
-        else:
-            context = Context()
+        context = Context(self.context)
+
         context.update(self.kwargs)
         context['variant'] = self.variant
-        output = render_to_string(self.get_template_name(), self.get_context(), context)
-        context.pop()
+        context.update(self.get_context())
+
+        output = render_to_string(self.get_template_name(), context)
+
         return output
 
 
