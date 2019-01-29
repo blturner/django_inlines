@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from django_inlines.inlines import Registry, inline_for_model, InlineInputError, registry, ModelInline
-from test_inlines import UserInline
+from .test_inlines import UserInline
 from core.models import User
 
 class ModelInlineTestCase(TestCase):
@@ -95,6 +95,8 @@ class AdminInlineTestCase(TestCase):
         self.assertTemplateUsed(resp, 'admin/django_inlines/inline_form.html')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.context['target'])
-        self.assertTrue(resp.context['ADMIN_MEDIA_PREFIX'])
         self.assertEqual(resp.context['app_label'], 'core/user')
-        self.assertContains(resp, ('<img src="%simg/admin/selector-search.gif" width="16" height="16" alt="Lookup" />' % resp.context['ADMIN_MEDIA_PREFIX']))
+        self.assertContains(
+            resp,
+            '<a href="/admin/core/user/?_to_field=id" class="related-lookup" id="lookup_id_body_id_value" onclick="return showRelatedObjectLookupPopup(this);"></a>'
+        )

@@ -4,7 +4,8 @@ from django_inlines.samples import YoutubeInline
 
 
 class YoutubeTestCase(unittest.TestCase):
-    
+    maxDiff = None
+
     def setUp(self):
         inlines = Registry()
         inlines.register('youtube', YoutubeInline)

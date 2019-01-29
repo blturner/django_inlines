@@ -1,17 +1,17 @@
 import re
+
 from django.template.loader import render_to_string
-from django.template import Context, RequestContext
 from django.db.models.base import ModelBase
 from django.conf import settings
 
 INLINE_SPLITTER = re.compile(r"""
     (?P<name>[a-z_]+)       # Must start with a lowercase + underscores name
     (?::(?P<variant>\w+))?  # Variant is optional, ":variant"
-    (?:(?P<args>[^\Z]+))? # args is everything up to the end
+    (?:(?P<args>[^$]+))? # args is everything up to the end
     """, re.VERBOSE)
 
 INLINE_KWARG_PARSER = re.compile(r"""
-    (?P<kwargs>(?:\s\b[a-z_]+=\w+\s?)+)?\Z # kwargs match everything at the end in groups " name=arg"
+    (?P<kwargs>(?:\s\b[a-z_]+=\w+\s?)+)?$ # kwargs match everything at the end in groups " name=arg"
     """, re.VERBOSE)
 
 
@@ -77,7 +77,11 @@ def inline_for_model(model, variants=[], inline_args={}):
         d['variants'] = variants
     if inline_args:
         d['args'] = inline_args
-    class_name = "%sInline" % model._meta.module_name.capitalize()
+
+    try:
+        class_name = "%sInline" % model._meta.module_name.capitalize()
+    except AttributeError:
+        class_name = "%sInline" % model._meta.model_name.capitalize()
     return type(class_name, (ModelInline,), d)
 
 
@@ -137,15 +141,13 @@ class TemplateInline(object):
         return templates
 
     def render(self):
-        if self.context:
-            context = self.context
-        else:
-            context = Context()
+        context = self.context or {}
+
         context.update(self.kwargs)
         context['variant'] = self.variant
-        output = render_to_string(self.get_template_name(), self.get_context(), context)
-        context.pop()
-        return output
+        context.update(self.get_context())
+
+        return render_to_string(self.get_template_name(), context)
 
 
 class ModelInline(TemplateInline):
@@ -172,7 +174,7 @@ class ModelInline(TemplateInline):
         except ValueError:
             raise InlineInputError("'%s' could not be converted to an int" % self.value)
         except model.DoesNotExist:
-            raise InlineInputError("'%s' could not be found in %s.%s" % (self.value, model._meta.app_label, model._meta.module_name))
+            raise InlineInputError("'%s' could not be found in %s.%s" % (self.value, model._meta.app_label, model._meta.model_name))
         return { 'object': object }
 
 

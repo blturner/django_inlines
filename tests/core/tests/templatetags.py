@@ -3,7 +3,7 @@ from django.template import Template, Context
 from django_inlines import inlines
 from django_inlines.samples import YoutubeInline
 from django_inlines.templatetags.inlines import stripinlines
-from test_inlines import QuineInline, DoubleInline
+from .test_inlines import QuineInline, DoubleInline
 
 
 class StripInlinesTestCase(TestCase):
@@ -23,11 +23,11 @@ class StripInlinesTestCase(TestCase):
     def test_simple_usage(self):
         inlines.registry.register('youtube', YoutubeInline)
 
-        template = u"{% load inlines %}<p>{{ body|stripinlines }}</p>"
+        template = "{% load inlines %}<p>{{ body|stripinlines }}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: </p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: </p>')
 
 
 class ProcessInlinesTestCase(TestCase):
@@ -54,29 +54,29 @@ class ProcessInlinesTestCase(TestCase):
     def test_simple_usage(self):
         inlines.registry.register('youtube', YoutubeInline)
 
-        template = u"{% load inlines %}<p>{% process_inlines body %}</p>"
+        template = "{% load inlines %}<p>{% process_inlines body %}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
 
     def test_usage_with_args_and_unicode(self):
         inlines.registry.register('youtube', YoutubeInline)
 
-        template = u"{% load inlines %}<p>{% process_inlines body %}</p>"
+        template = "{% load inlines %}<p>{% process_inlines body %}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo height=295 width=480 }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo height=295 width=480 }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
 
     def test_asvar(self):
         inlines.registry.register('youtube', YoutubeInline)
 
-        template = u"{% load inlines %}{% process_inlines body as body %}<p>{{ body|safe }}</p>"
+        template = "{% load inlines %}{% process_inlines body as body %}<p>{{ body|safe }}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
 
     def test_asvar_and_template_dir(self):
         """
@@ -86,12 +86,12 @@ class ProcessInlinesTestCase(TestCase):
 
         template = "{% load inlines %}{% process_inlines body as body in 'youtube_inlines' %}<p>{{ body|safe }}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
 
         template = "{% load inlines %}{% process_inlines body in 'youtube_inlines' as body %}<p>{{ body|safe }}</p>"
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
 
     def test_usage_with_multiple_inlines(self):
         inlines.registry.register('quine', QuineInline)
@@ -99,38 +99,29 @@ class ProcessInlinesTestCase(TestCase):
 
         template = "{% load inlines %}<p>{% process_inlines body %}</p>"
         context = {
-            'body': u"Some text {{ quine Why hello }} but {{ double your fun }}.",
+            'body': "Some text {{ quine Why hello }} but {{ double your fun }}.",
         }
         self.assertEqual(inlines.registry.process(context['body']), 'Some text {{ quine Why hello }} but your funyour fun.')
-        self.assertEqual(self.render(template, context), u'<p>Some text {{ quine Why hello }} but your funyour fun.</p>')
+        self.assertEqual(self.render(template, context), '<p>Some text {{ quine Why hello }} but your funyour fun.</p>')
 
     def test_usage_with_template_dirs(self):
         inlines.registry.register('youtube', YoutubeInline)
 
         template = "{% load inlines %}<p>{% process_inlines body in 'youtube_inlines' %}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
-
-    def test_that_context_gets_passed_through(self):
-        inlines.registry.register('youtube', YoutubeInline)
-
-        template = "{% load inlines %}<p>{% with 'b' as bold %}{% process_inlines body in 'youtube_inlines' %}{% endwith %}</p>"
-        context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
-        }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<b>C_ZebDKv1zo</b>\n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n</p>')
 
     def test_that_context_gets_popped(self):
         inlines.registry.register('youtube', YoutubeInline)
 
         template = """{% load inlines %}<p>{% process_inlines body in 'youtube_inlines' %} {{ test }}</p>"""
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo bold=bold }} {{ youtube C_ZebDKv1zo }}",
-            'test': u"green"
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo bold=bold }} {{ youtube C_ZebDKv1zo }}",
+            'test': "green"
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<b>C_ZebDKv1zo</b>\n</div>\n <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n green</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\n<b>C_ZebDKv1zo</b>\n</div>\n <div class="youtube_video">\nC_ZebDKv1zo\n</div>\n green</p>')
 
     def test_usage_with_template_dirs_fallback(self):
         """
@@ -143,6 +134,6 @@ class ProcessInlinesTestCase(TestCase):
 
         template = "{% load inlines %}<p>{% process_inlines body in 'nonexistent_inlines' %}</p>"
         context = {
-            'body': u"This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
+            'body': "This is my YouTube video: {{ youtube C_ZebDKv1zo }}",
         }
-        self.assertEqual(self.render(template, context), u'<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')
+        self.assertEqual(self.render(template, context), '<p>This is my YouTube video: <div class="youtube_video">\n<object width="480" height="295">\n  <param name="movie" value="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1"></param>\n  <param name="allowFullScreen" value="true"></param>\n  <param name="allowscriptaccess" value="always"></param>\n  <embed src="http://www.youtube.com/v/C_ZebDKv1zo&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>\n</object>  \n</div>\n</p>')

@@ -22,9 +22,9 @@ class InlinesNode(template.Node):
             from django_inlines.inlines import registry
 
             if self.template_directory is None:
-                rendered = registry.process(self.var_name.resolve(context), context=context)
+                rendered = registry.process(self.var_name.resolve(context))
             else:
-                rendered = registry.process(self.var_name.resolve(context), context=context, template_dir=self.template_directory)
+                rendered = registry.process(self.var_name.resolve(context), template_dir=self.template_directory)
             if self.asvar:
                 context[self.asvar] = rendered
                 return ''
@@ -68,7 +68,7 @@ def process_inlines(parser, token):
     ALLOWED_ARGS = ['as', 'in']
     kwargs = { 'template_directory': None }
     if len(args) > 2:
-        tuples = zip(*[args[2:][i::2] for i in range(2)])
+        tuples = list(zip(*[args[2:][i::2] for i in range(2)]))
         for k,v in tuples:
             if not k in ALLOWED_ARGS:
                 raise template.TemplateSyntaxError("%r tag options arguments must be one of %s." % (args[0], ', '.join(ALLOWED_ARGS)))
