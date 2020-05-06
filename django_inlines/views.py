@@ -17,7 +17,7 @@ def js_inline_config(request):
         d['help'] = getattr(inline_cls, 'help', '')
         d['variants'] = getattr(inline_cls, 'variants', [])
         args = getattr(inline_cls, 'inline_args', [])
-        d['args'] = sorted(args)
+        d['args'] = args.sort(key=lambda x: x['name'])
         if issubclass(inline_cls, inlines.ModelInline):
             d['app_path'] = "%s/%s" % (inline_cls.model._meta.app_label, inline_cls.model._meta.model_name)
         registered.append(d)
