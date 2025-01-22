@@ -4,7 +4,7 @@ try:
     from django.urls import reverse
 except ImportError:
     from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import Http404
 from django.conf import settings
 
@@ -28,7 +28,7 @@ def js_inline_config(request):
                 inline_cls.model._meta.model_name,
             )
         registered.append(d)
-    return render_to_response(
+    return render(
         "admin/django_inlines/js_inline_config.js",
         {"inlines": registered},
         content_type="text/javascript",
@@ -63,6 +63,4 @@ def get_inline_form(request):
                 inline_cls.model._meta.model_name,
             )
         )
-    return render_to_response(
-        "admin/django_inlines/inline_form.html", context_dict
-    )
+    return render("admin/django_inlines/inline_form.html", context_dict)
